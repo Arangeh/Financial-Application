@@ -24,4 +24,9 @@ public class AccountService {
         Account result = accountRepository.findByAccountNo(accountNo).orElseThrow(NullPointerException::new);
         return modelMapper.map(result, AccountDto.class);
     }
+
+    public AccountDto updateAccount(Account acc){
+        accountRepository.save(acc);
+        return modelMapper.map(acc,AccountDto.class);
+    }
 }

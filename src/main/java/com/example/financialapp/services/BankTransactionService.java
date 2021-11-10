@@ -68,6 +68,9 @@ public class BankTransactionService {
         tr.getDestination().deposit(transferAmount);
 
         transactionRepository.save(tr);
+
+        accountService.updateAccount(tr.getSource());
+        accountService.updateAccount(tr.getDestination());
         return createBankTransactionDto(tr);
     }
 

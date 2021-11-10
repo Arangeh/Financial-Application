@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-public class TransactionController {
+public class BankTransactionController {
     private final BankTransactionService bankTransactionService;
     @PostMapping("/transactions/transfer")
     public ResponseEntity<BankTransactionDto> performTransaction(@RequestBody BankTransactionDto trDto) {
