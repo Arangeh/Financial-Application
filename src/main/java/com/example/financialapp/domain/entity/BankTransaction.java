@@ -1,4 +1,4 @@
-package com.example.financialapp.domain;
+package com.example.financialapp.domain.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -15,14 +15,14 @@ import javax.persistence.*;
 public class BankTransaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", nullable = false)
+    @Column(nullable = false)
     private Long id;
-    private String source;
-    private String destination;
     private Integer transferAmount;
-
     @CreationTimestamp
-    @Column(name = "date_performed")
     private Timestamp datePerformed;
 
+    @ManyToOne(fetch=FetchType.LAZY)
+    private Account source;
+    @ManyToOne(fetch=FetchType.LAZY)
+    private Account destination;
 }

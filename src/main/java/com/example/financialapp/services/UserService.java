@@ -1,14 +1,15 @@
 package com.example.financialapp.services;
 
-import com.example.financialapp.domain.Account;
-import com.example.financialapp.domain.User;
+import com.example.financialapp.domain.dto.AccountDto;
+import com.example.financialapp.domain.dto.UserDto;
+import com.example.financialapp.domain.entity.Account;
+import com.example.financialapp.domain.entity.User;
 import com.example.financialapp.repository.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserService {
@@ -25,38 +26,24 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public User getUserById(Long id){
-        User u = userRepository.findById(id).orElseThrow(NullPointerException::new);
-        return u;
-    }
-
     @Transactional
-    public User update(User usr){
+    public UserDto create(UserDto usr){
         Assert.notNull(usr, "The domainObject must not be null!");
         User entity = modelMapper.map(usr, User.class);
 
         User result = userRepository.save(entity);
-//        log.debug("save/update entity {}", result);
-//        return modelMapper.map(result, getDtoClass());
-        return modelMapper.map(result,User.class);
+        return modelMapper.map(result,UserDto.class);
     }
 
     @Transactional
-    public User addAccount(Long id, Account acc){
+    public UserDto addAccount(Long id, AccountDto acc){
         Assert.notNull(id, "The domainObject must not be null!");
 
         User entity = (userRepository.findById(id)).orElseThrow(NullPointerException::new);
-        entity = modelMapper.map(entity, User.class);
-        entity.getAccounts().add(acc);
+        entity.getAccounts().add(modelMapper.map(acc,Account.class));
         User result = userRepository.save(entity);
-//        log.debug("save/update entity {}", result);
-//        return modelMapper.map(result, getDtoClass());
-        return modelMapper.map(result,User.class);
+        return modelMapper.map(result,UserDto.class);
     }
-
-
-
-
 
 }
 

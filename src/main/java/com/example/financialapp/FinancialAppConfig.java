@@ -14,4 +14,5 @@ public class FinancialAppConfig {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
+
 }

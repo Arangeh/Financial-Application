@@ -1,5 +1,5 @@
 package com.example.financialapp.repository;
-import com.example.financialapp.domain.Account;
+import com.example.financialapp.domain.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
